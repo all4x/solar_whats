@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Aqui adicionamos um passo para enviar uma requisição HTTP POST para o webhook
+      - name: Trigger deployment webhook
+        env:
+          WEBHOOK_URL: http://177.153.59.179:3000/api/deploy/compose/-aqraOJw0ytWPMyWh51eq
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d '{}' $WEBHOOK_URL
